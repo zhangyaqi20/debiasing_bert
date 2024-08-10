@@ -48,7 +48,7 @@ def main():
          )
 
     dm.setup(stage="fit")
-    # trainer.fit(nn, (dm.train_E_female, dm.train_E_male))
+    trainer.fit(nn, (dm.train_E_female, dm.train_E_male))
     
     dm.setup(stage="test")
     trainer.test(dm)
