@@ -1,0 +1,7 @@
+*.pyc
+*.log
+
+
+data/context_embeddings
+lightning_logs
+outputs
