@@ -16,6 +16,10 @@ The embeddings form representation space for two categories. We multiply them wi
 
 For evaluation, we prepare a list of words, e.g. [professions](https://github.com/vwoloszyn/bias_on_word2vec/blob/master/data/professions.json). As in the first demostration, we extract bert embeddings with the help of the same corpora. We can already compute the cosine similarities of the word to *woman* and *man*, respectively. Then, we do the transformation with the optimized orthogonal matrix $Q$ and get the complement space (other than the first dimension) of transformed embeddings. We compute the cosine similarities of the word to *woman* and *man* in this complement space.
 
-Here we present part of our results:
+Results
+----
+Here we present part of our results: 
 
 ![Results](images/ba_results_table.PNG)
+
+We find that the absolute diffences of similarities to *woman* and *man* decrease after the transformation. This means, the embeddings in the complement space contain less gender information than before.
