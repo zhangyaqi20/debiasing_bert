@@ -13,7 +13,7 @@ class WassersteinDist(nn.Module):
 
         std_X = torch.std(X)
         std_Y = torch.std(Y)
-        print(f"mu_X={mu_X}\tstd_X={std_X}\nmu_Y={mu_Y}\tstd_Y={std_Y}")
+        # print(f"mu_X={mu_X}\tstd_X={std_X}\nmu_Y={mu_Y}\tstd_Y={std_Y}")
 
         # Compute the squared difference between the means
         mean_diff_squared = (mu_X - mu_Y) ** 2
@@ -25,10 +25,10 @@ class WassersteinDist(nn.Module):
         loss = torch.sqrt(mean_diff_squared + variance_term)
 
         if self.reduction == "none":
-            return loss
+            return -loss
         if self.reduction == "mean":
-            return loss.mean()
-        return loss.sum()
+            return -loss.mean()
+        return -loss.sum()
 
 # X = torch.normal(mean=torch.tensor(2.0), std=torch.tensor(1.0), size=(100,))
 # Y = torch.normal(mean=torch.tensor(5.0), std=torch.tensor(2.0), size=(100,))

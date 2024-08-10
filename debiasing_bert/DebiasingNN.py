@@ -1,3 +1,4 @@
+import logging
 import pytorch_lightning as pl
 import torch
 import torch.nn as nn
@@ -19,14 +20,16 @@ class DebiasingNN(pl.LightningModule):
         self.P = torch.Tensor([1]*self.dim_ultradense + [0]*(self.dim - self.dim_ultradense)).unsqueeze(1)
         self.Q = nn.Parameter(self._initialize_orthogonal(dim))
 
+        self.save_hyperparameters()
+
     def _initialize_orthogonal(self, dim):
         Q = torch.empty(dim, dim)
         nn.init.orthogonal_(Q)
         return Q
     
     def reorthogonalize(self):
-        U, _, Vh = torch.linalg.svd(self.Q)
-        self.Q = U @ Vh
+        U, _, Vh = torch.linalg.svd(self.Q.data)
+        self.Q.data = U @ Vh
 
     def forward(self, E_x, E_y):
         N = E_x.shape[0]
@@ -43,7 +46,7 @@ class DebiasingNN(pl.LightningModule):
         assert PQE_y.shape == (N, )
 
         return (PQE_x, PQE_y)
-
+    
     def configure_optimizers(self):
         return torch.optim.AdamW(self.parameters(), lr=self.lr, weight_decay=self.weight_decay)
 

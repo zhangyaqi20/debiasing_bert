@@ -47,6 +47,10 @@ class DebiasingDataModule(pl.LightningDataModule):
         self.data_test = None
         self.tokenizer = AutoTokenizer.from_pretrained(model_url)
         self.bert = AutoModel.from_pretrained(model_url)
+        self.def_pairs = None
+        self.woman_info = None
+        self.man_info = None
+        self.professions = None
 
     def prepare_data(self):
         data_name = "bbcnews"
@@ -94,11 +98,15 @@ class DebiasingDataModule(pl.LightningDataModule):
                 if p.isValid(): # filter [UNK] word and words without contexts
                     pairs.append(p)
                     p.construct_embedding(self.bbcnews_E)
-            
+                    if f_word == "woman" and m_word == "man":
+                        self.woman_info = p.female_word
+                        self.man_info = p.male_word
+            self.def_pairs = pairs
             self.train_E_female = torch.stack([p.female_word.embedding for p in pairs])
             self.train_E_male = torch.stack([p.male_word.embedding for p in pairs])
             assert self.train_E_female.shape == (len(pairs), self.bbcnews_E.shape[2])
             assert self.train_E_male.shape == (len(pairs), self.bbcnews_E.shape[2])
+            logger.info("Train Data Setup Finished.")
         else:
             with open('./data/professions.json') as f:
                 professions = json.load(f)
@@ -106,16 +114,18 @@ class DebiasingDataModule(pl.LightningDataModule):
             for prof in professions:
                 token = prof[0]
                 token_id = self.tokenizer.convert_tokens_to_ids(token.lower())
+                if token_id == 100: # UNK word
+                    continue
                 word = Word(token, token_id)
                 for context_idx in range(len(self.bbcnews_dataset)):
                     word.add_context(self.bbcnews_dataset[context_idx], context_idx)
                 if word.isValid(): # filter [UNK] word and words without contexts
                     eval_words.append(word)
                     word.construct_embedding(self.bbcnews_E)
-                
+            self.professions = eval_words
             self.eval_E = torch.stack([word.embedding for word in eval_words])
             assert self.eval_E.shape == (len(eval_words), self.bbcnews_E.shape[2])
-        logger.info("Data Setup Finished.")
+            logger.info("Eval Data Setup Finished.")
 
     def train_dataloader(self):
         pass

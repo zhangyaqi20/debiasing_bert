@@ -1,7 +1,6 @@
 *.pyc
 *.log
 
-
 data/context_embeddings
+checkpoints
 lightning_logs
-outputs

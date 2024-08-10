@@ -1,0 +1,9 @@
+word,Sim. to woman BEFORE,Sim. to man BEFORE,diff BEFORE,Sim. to woman AFTER,Sim. to man AFTER,diff AFTER
+actor,tensor(0.4216),tensor(0.5361),tensor(-0.1145),tensor(-0.0049),tensor(0.0218),tensor(-0.0267)
+actress,tensor(0.6489),tensor(0.4644),tensor(0.1845),tensor(-0.0140),tensor(-0.0062),tensor(-0.0077)
+advocate,tensor(0.3447),tensor(0.3534),tensor(-0.0087),tensor(-0.0646),tensor(-0.0383),tensor(-0.0264)
+aide,tensor(0.4592),tensor(0.4209),tensor(0.0383),tensor(0.0018),tensor(0.0023),tensor(-0.0005)
+ambassador,tensor(0.3720),tensor(0.4262),tensor(-0.0542),tensor(0.0092),tensor(-0.0084),tensor(0.0175)
+analyst,tensor(0.4378),tensor(0.4564),tensor(-0.0187),tensor(-0.0258),tensor(0.0037),tensor(-0.0295)
+architect,tensor(0.3613),tensor(0.4048),tensor(-0.0434),tensor(0.0160),tensor(0.0219),tensor(-0.0058)
+artist,tensor(0.4724),tensor(0.5317),tensor(-0.0593),tensor(0.0216),tensor(0.0220),tensor(-0.0004)
