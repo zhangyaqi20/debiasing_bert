@@ -7,6 +7,8 @@ Project Description
 ----
 Embeddings are widely used in natural language processing tasks. But one concern is that embeddings from existing language models are dense and high-dimensional, which is difficult for people to interpret. In this work, we propose a distribution-based method to identify ultradense subspace from contextualized embedding space.
 
+Demonstration
+----
 We use pairs of words to define two different categories, e.g. [female and male](https://github.com/vwoloszyn/bias_on_word2vec/blob/master/data/definitional_pairs.json), and we extract bert embeddings for these pairs with the help of some corpora.
 
 ![Demo1](images/ba_demo_1.PNG)
